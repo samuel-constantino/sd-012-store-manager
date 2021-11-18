@@ -2,7 +2,9 @@ const express = require('express');
 const { json } = require('body-parser');
 
 const logReport = require('./logger/logReport');
-// const { productRouter, saleRouter } = require('./routes');
+const { productRouter, saleRouter } = require('./routes');
+
+const { errorMidleware } = require('./midlewares');
 
 require('dotenv').config();
 
@@ -10,9 +12,16 @@ const app = express();
 
 app.use(json());
 
-// app.use('/product', productRouter);
+// não remova esse endpoint, e para o avaliador funcionar
+app.get('/', (_request, response) => {
+    response.send();
+});  
 
-// app.use('/sale', saleRouter);
+app.use('/products', productRouter);
+
+app.use('/sale', saleRouter);
+
+app.use(errorMidleware);
 
 const PORT = process.env.SERVER_PORT || 5000;
 
