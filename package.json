@@ -28,7 +28,9 @@
     "express-rescue": "^1.1.26",
     "faker": "^4.1.0",
     "frisby": "^2.1.2",
+    "http-status-codes": "^2.1.4",
     "jest": "^26.4.1",
+    "joi": "^17.4.2",
     "mongodb": "^3.5.9",
     "nodemon": "^2.0.4",
     "winston": "^3.3.3"

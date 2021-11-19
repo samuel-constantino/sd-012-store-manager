@@ -15,6 +15,20 @@ const getById = async (id) => {
     return product;
 };
 
+const getByName = async (name) => {
+    const db = await connection();
+
+    const product = await db.collection('products').findOne({ name });
+
+    if (product) {
+        const { _id } = product;
+        // imprime log de consulta
+        logReport('info', 200, `Consulta: Produto ${Object(_id).toString()}`);
+    }
+
+    return product;
+};
+
 const create = async (product) => {
     const db = await connection();
 
@@ -31,6 +45,7 @@ const create = async (product) => {
 };
 
 module.exports = {
-    create,
     getById,
+    getByName,
+    create,
 };
