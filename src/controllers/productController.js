@@ -13,6 +13,8 @@ const create = rescue(async (req, res) => {
 
     const result = await productService.create({ name, quantity });
 
+    if (result.error) return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json(result.error);
+
     return res.status(201).json(result);
 });
 
