@@ -2,7 +2,7 @@ const Joi = require('joi');
 
 const isProductValid = (product) => {
     const schema = Joi.object({
-        name: Joi.string().min(6).required(),
+        name: Joi.string().min(5).required(),
         quantity: Joi.number().integer().min(1).required(),
     });
 
@@ -15,7 +15,7 @@ const isProductValid = (product) => {
             error: {
                 err: {
                     code: 'invalid_data',
-                    message: '"name" length must be at least 5 characters long',
+                    message: error.message,
                 },
             },
         }; 
