@@ -25,7 +25,6 @@ const getByName = async (name) => {
         // imprime log de consulta
         logReport('info', 200, `Consulta: Produto ${Object(_id).toString()}`);
     }
-
     return product;
 };
 
@@ -33,7 +32,6 @@ const create = async (product) => {
     const db = await connection();
 
     const { insertedId: id } = await db.collection('products').insertOne({ ...product });
-
     if (!id) return null;
 
     // imprime log de cadastro

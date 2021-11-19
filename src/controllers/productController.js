@@ -12,9 +12,7 @@ const create = rescue(async (req, res) => {
     if (error) return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json(error);
 
     const result = await productService.create({ name, quantity });
-
     if (result.error) return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json(result.error);
-
     return res.status(201).json(result);
 });
 

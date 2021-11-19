@@ -1,8 +1,7 @@
 const { productModel } = require('../models');
 
 const create = async (product) => {
-    const productFound = productModel.getByName(product.name);
-
+    const productFound = await productModel.getByName(product.name);
     if (productFound) {
         return {
             error: {

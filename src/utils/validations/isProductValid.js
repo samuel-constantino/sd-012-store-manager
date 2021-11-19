@@ -9,8 +9,9 @@ const isProductValid = (product) => {
     const { name, quantity } = product;
 
     const { error } = schema.validate({ name, quantity });
-
+    const ERROR_QUANTITY = '"quantity" must be larger than or equal to 1';
     if (error) {
+        error.message = error.message.includes('greater') ? ERROR_QUANTITY : error.message;
         return {
             error: {
                 err: {
@@ -19,9 +20,7 @@ const isProductValid = (product) => {
                 },
             },
         }; 
-    }
-
-    return {};
+    } return {};
 };
 
 module.exports = isProductValid;
