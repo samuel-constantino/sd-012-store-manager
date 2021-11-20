@@ -1,11 +1,23 @@
+const { ObjectId } = require('mongodb');
+
 const { connection } = require('./connection');
 const logReport = require('../logger/logReport');
 
-const getById = async (id) => {
+const getAll = async () => {
     const db = await connection();
 
-    const product = await db.collection('products').findOne({ _id: id });
+    const products = await db.collection('products').find().toArray();
 
+    // imprime log de consulta
+    logReport('info', 200, 'Consulta: Todos produtos');
+
+    return products;
+};
+
+const getById = async (id) => {
+    const db = await connection();
+    const product = await db.collection('products').findOne({ _id: ObjectId(id) });
+    
     if (product) {
         const { _id } = product;
         // imprime log de consulta
@@ -43,6 +55,7 @@ const create = async (product) => {
 };
 
 module.exports = {
+    getAll,
     getById,
     getByName,
     create,

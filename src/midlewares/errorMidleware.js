@@ -12,7 +12,7 @@ const errorMidleware = (err, _req, res) => {
 
     logReport('error', status, err.message);
 
-    res.status(status).json({ error: { message: err.message } });
+    return res.status(status).json({ error: { message: err.message } });
 };
 
 module.exports = errorMidleware;
