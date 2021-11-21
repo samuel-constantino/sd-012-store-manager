@@ -2,7 +2,7 @@
   "name": "sd-0x-store-manager",
   "version": "1.0.0",
   "description": "Simple CRUD to sales and products",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
     "test": "jest --runInBand",
     "test:mocha": "nyc --all --include models --include services --include controllers mocha test/unit/*.js --exit",
