@@ -75,10 +75,26 @@ const update = async (product) => {
     return productFound;
 };
 
+const remove = async (productFound) => {
+    const { _id } = productFound;
+    const db = await connection();
+    const { result } = await db.collection('products').remove({ _id: ObjectId(_id) });
+    
+    if (result.ok) {
+        // imprime log de consulta
+        logReport('info', 200, `Remoção: Produto ${Object(_id).toString()}`);
+
+        return productFound;
+    }
+
+    return null;
+};
+
 module.exports = {
     getAll,
     getById,
     getByName,
     create,
     update,
+    remove,
 };

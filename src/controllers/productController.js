@@ -5,6 +5,13 @@ const { productService } = require('../services');
 const isProductValid = require('../utils/validations/isProductValid');
 const isValidId = require('../utils/validations/isValidId');
 
+const ERROR_ID_FORMAT = {
+    err: {
+        code: 'invalid_data',
+        message: 'Wrong id format',
+    },
+};
+
 const getAll = rescue(async (_req, res) => {
     const products = await productService.getAll();
     
@@ -14,14 +21,7 @@ const getAll = rescue(async (_req, res) => {
 const getById = rescue(async (req, res) => {
     const { id } = req.params;
 
-    if (!isValidId(id)) {
-        return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
-            err: {
-                code: 'invalid_data',
-                message: 'Wrong id format',
-            },
-        });
-    }
+    if (!isValidId(id)) return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json(ERROR_ID_FORMAT);
 
     const product = await productService.getById(id);
 
@@ -62,9 +62,24 @@ const update = rescue(async (req, res) => {
     return res.status(StatusCodes.OK).json(result);
 });
 
+const remove = rescue(async (req, res) => {
+    const { id } = req.params;
+
+    if (!isValidId(id)) return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json(ERROR_ID_FORMAT);
+
+    const productFound = await productService.getById(id);
+
+    if (!productFound) return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json(ERROR_ID_FORMAT);
+
+    const result = await productService.remove(productFound);
+
+    return res.status(StatusCodes.OK).json(result);
+});
+
 module.exports = {
     getAll,
     getById,
     create,
     update,
+    remove,
 };
