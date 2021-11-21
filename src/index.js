@@ -23,6 +23,6 @@ app.use('/sale', saleRouter);
 
 app.use(errorMidleware);
 
-const PORT = process.env.SERVER_PORT || 5000;
+const PORT = process.env.SERVER_PORT || 3000;
 
 app.listen(PORT, () => logReport('info', 200, `PORT ${PORT}`));
