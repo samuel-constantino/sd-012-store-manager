@@ -46,11 +46,25 @@ const create = rescue(async (req, res) => {
 
     if (result.error) return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json(result.error);
 
-    return res.status(201).json(result);
+    return res.status(StatusCodes.CREATED).json(result);
+});
+
+const update = rescue(async (req, res) => {
+    const { id } = req.params;
+    const { name, quantity } = req.body;
+
+    const { error } = isProductValid({ name, quantity });
+
+    if (error) return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json(error);
+
+    const result = await productService.update({ id, name, quantity });
+
+    return res.status(StatusCodes.OK).json(result);
 });
 
 module.exports = {
     getAll,
     getById,
     create,
+    update,
 };

@@ -30,8 +30,15 @@ const create = async (product) => {
     return result;
 };
 
+const update = async (product) => {
+    const result = await productModel.update(product);
+
+    return result;
+};
+
 module.exports = {
     getAll,
     getById,
     create,
+    update,
 };

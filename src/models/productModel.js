@@ -54,9 +54,31 @@ const create = async (product) => {
     return productFound;
 };
 
+const update = async (product) => {
+    const { id, name, quantity } = product;
+
+    const db = await connection();
+
+    const { modifiedCount } = await db.collection('products')
+        .updateOne(
+            { _id: ObjectId(id) }, 
+            { $set: { name, quantity } },
+        );
+
+    if (!modifiedCount) return null;
+
+    // imprime log de cadastro
+    logReport('info', 201, `Atualização: Produto ${id}`);
+
+    const productFound = await getById(id);
+
+    return productFound;
+};
+
 module.exports = {
     getAll,
     getById,
     getByName,
     create,
+    update,
 };
