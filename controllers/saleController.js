@@ -51,8 +51,22 @@ const create = rescue(async (req, res) => {
     return res.status(StatusCodes.OK).json(result);
 });
 
+const update = rescue(async (req, res) => {
+    const { id } = req.params;
+    const products = req.body;
+
+    if (!isSaleValid(products)) {
+        return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json(ERROR_SALE_VALID);
+    }
+
+    const result = await saleService.update({ id, products });
+
+    return res.status(StatusCodes.OK).json(result);
+});
+
 module.exports = {
     getAll,
     getById,
     create,
+    update,
 };

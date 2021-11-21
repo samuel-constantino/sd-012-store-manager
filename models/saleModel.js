@@ -44,8 +44,30 @@ const create = async (products) => {
     return saleFound;
 };
 
+const update = async (sale) => {
+    const { id, products } = sale;
+
+    const db = await connection();
+
+    const { modifiedCount } = await db.collection('sales')
+        .updateOne(
+            { _id: ObjectId(id) }, 
+            { $set: { itensSold: products } },
+        );
+
+    if (!modifiedCount) return null;
+
+    // imprime log de cadastro
+    logReport('info', 201, `Atualização: Venda ${id}`);
+
+    const saleFound = await getById(id);
+
+    return saleFound;
+};
+
 module.exports = {
     getAll,
     getById,
     create,
+    update,
 };
