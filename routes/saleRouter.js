@@ -12,4 +12,6 @@ route.post('/', saleController.create);
 
 route.put('/:id', saleController.update);
 
+route.delete('/:id', saleController.remove);
+
 module.exports = route;

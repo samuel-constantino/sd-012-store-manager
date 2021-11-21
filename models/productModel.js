@@ -78,7 +78,7 @@ const update = async (product) => {
 const remove = async (productFound) => {
     const { _id } = productFound;
     const db = await connection();
-    const { result } = await db.collection('products').remove({ _id: ObjectId(_id) });
+    const { result } = await db.collection('products').deleteOne({ _id: ObjectId(_id) });
     
     if (result.ok) {
         // imprime log de consulta

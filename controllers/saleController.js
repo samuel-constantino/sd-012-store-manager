@@ -19,6 +19,13 @@ const ERROR_NOT_FOUND = {
     },
 };
 
+const ERROR_ID_FORMAT = {
+    err: {
+        code: 'invalid_data',
+        message: 'Wrong sale ID format',
+    },
+};
+
 const getAll = rescue(async (_req, res) => {
     const sales = await saleService.getAll();
     
@@ -64,9 +71,24 @@ const update = rescue(async (req, res) => {
     return res.status(StatusCodes.OK).json(result);
 });
 
+const remove = rescue(async (req, res) => {
+    const { id } = req.params;
+
+    if (!isValidId(id)) return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json(ERROR_ID_FORMAT);
+
+    const saleFound = await saleService.getById(id);
+
+    if (!saleFound) return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json(ERROR_ID_FORMAT);
+
+    const result = await saleService.remove(saleFound);
+
+    return res.status(StatusCodes.OK).json(result);
+});
+
 module.exports = {
     getAll,
     getById,
     create,
     update,
+    remove,
 };

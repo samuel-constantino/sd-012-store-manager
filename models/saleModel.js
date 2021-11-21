@@ -65,9 +65,25 @@ const update = async (sale) => {
     return saleFound;
 };
 
+const remove = async (sale) => {
+    const { _id } = sale;
+    const db = await connection();
+    const { result } = await db.collection('sales').deleteOne({ _id: ObjectId(_id) });
+    
+    if (result.ok) {
+        // imprime log de consulta
+        logReport('info', 200, `Remoção: Venda ${Object(_id).toString()}`);
+
+        return sale;
+    }
+
+    return null;
+};
+
 module.exports = {
     getAll,
     getById,
     create,
     update,
+    remove,
 };
