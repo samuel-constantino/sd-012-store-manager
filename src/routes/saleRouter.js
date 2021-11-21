@@ -1,3 +1,11 @@
-const saleRouter = () => { };
+const express = require('express');
 
-module.exports = saleRouter;
+const { saleController } = require('../controllers');
+
+const route = express.Router();
+
+route.get('/', saleController.getAll);
+
+route.post('/', saleController.create);
+
+module.exports = route;
