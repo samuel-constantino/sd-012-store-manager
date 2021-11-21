@@ -46,5 +46,6 @@ const create = async (products) => {
 
 module.exports = {
     getAll,
+    getById,
     create,
 };

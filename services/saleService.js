@@ -6,6 +6,12 @@ const getAll = async () => {
     return sales;
 };
 
+const getById = async (id) => {
+    const sale = await saleModel.getById(id);
+
+    return sale;
+};
+
 const create = async (products) => {
     const result = await saleModel.create(products);
 
@@ -14,5 +20,6 @@ const create = async (products) => {
 
 module.exports = {
     getAll,
+    getById,
     create,
 };
