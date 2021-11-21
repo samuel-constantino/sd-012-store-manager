@@ -19,7 +19,7 @@ app.get('/', (_request, response) => {
 
 app.use('/products', productRouter);
 
-app.use('/sale', saleRouter);
+app.use('/sales', saleRouter);
 
 app.use(errorMidleware);
 
