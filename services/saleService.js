@@ -1,4 +1,12 @@
 const { saleModel } = require('../models');
+const isQuantityValid = require('../utils/validations/isQuantityValid');
+
+const ERROR_INVALID_QUANTITY = {
+    err: {
+        code: 'stock_problem',
+        message: 'Such amount is not permitted to sell',
+    },
+};
 
 const getAll = async () => {
     const sales = await saleModel.getAll();
@@ -13,6 +21,8 @@ const getById = async (id) => {
 };
 
 const create = async (products) => {
+    if (!isQuantityValid(products)) return ERROR_INVALID_QUANTITY;
+    
     const result = await saleModel.create(products);
 
     return result;

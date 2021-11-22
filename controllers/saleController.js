@@ -55,6 +55,8 @@ const create = rescue(async (req, res) => {
 
     const result = await saleService.create(products);
 
+    if (result.err) return res.status(StatusCodes.NOT_FOUND).json(result);
+
     return res.status(StatusCodes.OK).json(result);
 });
 
