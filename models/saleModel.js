@@ -65,6 +65,12 @@ const create = async (products) => {
         updateInventory(productId, -quantity);
     });
 
+    // await Promise.all(
+    //     products.forEach(async ({ productId, quantity }) => {
+    //         await updateInventory(productId, -quantity);
+    //     }),
+    // );
+
     const saleFound = await getById(id);
 
     return saleFound;

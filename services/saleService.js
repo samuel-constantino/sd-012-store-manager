@@ -21,7 +21,9 @@ const getById = async (id) => {
 };
 
 const create = async (products) => {
-    if (!isQuantityValid(products)) return ERROR_INVALID_QUANTITY;
+    const quantityValided = await isQuantityValid(products);
+
+    if (!quantityValided) return ERROR_INVALID_QUANTITY;
     
     const result = await saleModel.create(products);
 
