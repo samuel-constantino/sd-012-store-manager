@@ -1,3 +1,4 @@
+jest.setTimeout(30000);
 const fs = require('fs').promises;
 const util = require('util');
 const { exec: callbackExec } = require('child_process');
