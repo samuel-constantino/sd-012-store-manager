@@ -4,7 +4,7 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 
 const { OPTIONS, DB_NAME } = require('../../models/connection');
-const { productModel, saleModel } = require('../../models/');
+const { productModel } = require('../../models/');
 
 describe('Testa rota de produtos', () => {
     let connectionMock;
@@ -55,35 +55,34 @@ describe('Testa rota de produtos', () => {
     });
 
     describe("Testa a consulta de produto por id", () => {
-        let db = null;
-        let product = null;
-
-        before(async () => {
-            db = connectionMock.db(DB_NAME);
-
-            product = {
-                _id: '619e5367f60ad53e962a0a97',
-                name: 'Produto de teste',
-                quantity: 1,
-            };
-
-            await db.collection('products').insertOne(product);
-        });
-
-        after(() => {
-            db.collection('products').drop()
-        });
-
         describe ("Testa consulta com sucesso", async () => {
+            let db = null;
+            let productMock = null;
             let productFound = null;
-            const { _id } = product;
 
             before(async () => {
+                db = connectionMock.db(DB_NAME);
+
+                productMock = {
+                    _id: '619e5367f60ad53e962a0a97',
+                    name: 'Produto de teste',
+                    quantity: 1,
+                };
+
+                await db.collection('products').insertOne(productMock);
+
+                const { _id } = productMock;
+
                 productFound = await productModel.getById(_id);
             });
-            
+
+            after(() => {
+                db.collection('products').drop()
+            });
+
             it ("O retorno deve ser um objeto", () => {
-               expect(productFound).to.be.an('object');
+                console.log(productFound);
+                expect(productFound).to.be.an('object');
             });
         });
     });
