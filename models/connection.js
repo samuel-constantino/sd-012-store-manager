@@ -23,4 +23,4 @@ const connection = async () => {
     return db;
 };
 
-module.exports = { connection };
+module.exports = { connection, OPTIONS, DB_NAME };
