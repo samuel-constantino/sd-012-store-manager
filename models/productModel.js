@@ -56,7 +56,6 @@ const create = async (product) => {
 
 const update = async (product) => {
     const { id, name, quantity } = product;
-
     const db = await connection();
 
     const { modifiedCount } = await db.collection('products')
@@ -64,7 +63,6 @@ const update = async (product) => {
             { _id: ObjectId(id) }, 
             { $set: { name, quantity } },
         );
-
     if (!modifiedCount) return null;
 
     // imprime log de cadastro

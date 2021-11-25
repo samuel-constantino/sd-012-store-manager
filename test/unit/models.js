@@ -152,16 +152,17 @@ describe('Testa rota de produtos', () => {
 
             before(async () => {
                 productMock = {
-                    _id: ObjectId('619e5367f60ad53e962a0a98'),
                     name: 'Produto de teste 2',
                     quantity: 2,
                 };
-                productFound = await productModel.update(productMock);
+
+                const { _id: id, name, quantity } = await productModel.create(productMock);
+                productFound = await productModel.update({ id, name: 'Produto de teste 3', quantity: 3 });
             });
 
             it ("retorna objeto", () => {
                 expect(productFound).to.be.an('object');
-            })
+            });
         });
     });
 
