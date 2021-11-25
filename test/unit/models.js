@@ -7,9 +7,18 @@ const { OPTIONS, DB_NAME } = require('../../models/connection');
 const { productModel } = require('../../models/');
 
 describe('Testa rota de produtos', () => {
+    let productMock = null;
     let connectionMock;
     
     before(async () => {
+        productMock = {
+            _id: ObjectId('619e5367f60ad53e962a0a97'),
+            name: 'Produto de teste',
+            quantity: 1,
+        };
+
+        // Mock da função MongoClient.connect
+
         const DBserver = new MongoMemoryServer();
         const urlMock = await DBserver.getUri();
         const optionsMock = OPTIONS;
@@ -23,7 +32,7 @@ describe('Testa rota de produtos', () => {
         MongoClient.connect.restore();
     });
 
-    describe("Testa a consulta de todos os produtos", () => {
+    describe("getAll", () => {
         describe("Testa consulta com sucesso", () => {
             let products;
             before(async () => {
@@ -54,20 +63,13 @@ describe('Testa rota de produtos', () => {
         });
     });
 
-    describe("Testa a consulta de produto por id", () => {
+    describe("getById", () => {
         describe ("Testa consulta com sucesso", async () => {
             let db = null;
-            let productMock = null;
             let productFound = null;
 
             before(async () => {
                 db = connectionMock.db(DB_NAME);
-
-                productMock = {
-                    _id: ObjectId('619e5367f60ad53e962a0a97'),
-                    name: 'Produto de teste',
-                    quantity: 1,
-                };
 
                 await db.collection('products').insertOne(productMock);
 
@@ -81,7 +83,31 @@ describe('Testa rota de produtos', () => {
             });
 
             it ("O retorno deve ser um objeto", () => {
-                console.log(productFound);
+                expect(productFound).to.be.an('object');
+            });
+        });
+    });
+
+    describe("getByName", () => {
+        describe ("Testa consulta com sucesso", async () => {
+            let db = null;
+            let productFound = null;
+
+            before(async () => {
+                db = connectionMock.db(DB_NAME);
+
+                await db.collection('products').insertOne(productMock);
+
+                const { name } = productMock;
+
+                productFound = await productModel.getByName(name);
+            });
+
+            after(() => {
+                db.collection('products').drop()
+            });
+
+            it ("O retorno deve ser um objeto", () => {
                 expect(productFound).to.be.an('object');
             });
         });
