@@ -8,7 +8,8 @@ const { productModel } = require('../../models/');
 
 describe('Testa rota de produtos', () => {
     let productMock = null;
-    let connectionMock;
+    let properties = null;
+    let connectionMock = null;
     
     before(async () => {
         productMock = {
@@ -16,6 +17,7 @@ describe('Testa rota de produtos', () => {
             name: 'Produto de teste',
             quantity: 1,
         };
+        properties = ['_id', 'name', 'quantity'];
 
         // Mock da função MongoClient.connect
 
@@ -52,8 +54,6 @@ describe('Testa rota de produtos', () => {
             });
     
             it("Estes objetos devem incluir apenas propriedades válidas", () => {
-                let properties = ['_id', 'name', 'quantity'];
-                
                 products.forEach((product) => {
                     properties.forEach((property) => {
                         expect(product).to.be.an.property(property);
@@ -85,6 +85,12 @@ describe('Testa rota de produtos', () => {
             it ("O retorno deve ser um objeto", () => {
                 expect(productFound).to.be.an('object');
             });
+
+            it(`Propriedades válidas`, () => {
+                properties.forEach((property) => {
+                    expect(productFound).to.be.an.property(property);
+                });
+            });
         });
     });
 
@@ -110,6 +116,76 @@ describe('Testa rota de produtos', () => {
             it ("O retorno deve ser um objeto", () => {
                 expect(productFound).to.be.an('object');
             });
+
+            it(`Propriedades válidas`, () => {
+                properties.forEach((property) => {
+                    expect(productFound).to.be.an.property(property);
+                });
+            });
+        });
+    });
+
+    describe('create', async () => {
+        describe('sucesso', () => {
+            let productMock = null;
+            let productFound = null
+
+            before(async () => {
+                productMock = {
+                    _id: ObjectId('619e5367f60ad53e962a0a98'),
+                    name: 'Produto de teste 2',
+                    quantity: 2,
+                };
+                productFound = await productModel.create(productMock);
+            });
+
+            it ("retorna objeto", () => {
+                expect(productFound).to.be.an('object');
+            })
+        });
+    });
+
+    describe('update', async () => {
+        describe('sucesso', () => {
+            let productMock = null;
+            let productFound = null
+
+            before(async () => {
+                productMock = {
+                    _id: ObjectId('619e5367f60ad53e962a0a98'),
+                    name: 'Produto de teste 2',
+                    quantity: 2,
+                };
+                productFound = await productModel.update(productMock);
+            });
+
+            it ("retorna objeto", () => {
+                expect(productFound).to.be.an('object');
+            })
+        });
+    });
+
+    describe('remove', async () => {
+        describe('sucesso', () => {
+            let productMock = null;
+            let productFound = null
+
+            before(async () => {
+                productMock = {
+                    _id: ObjectId('619e5367f60ad53e962a0a99'),
+                    name: 'Produto de teste 2',
+                    quantity: 2,
+                };
+                productFound = await productModel.create(productMock);
+
+                const { _id } = productFound;
+
+                productFound = await productModel.remove(_id);
+            });
+
+            it ("retorna objeto", () => {
+                expect(productFound).to.be.an('object');
+            })
         });
     });
 });
