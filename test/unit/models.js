@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const { expect } = require('chai');
 const sinon = require('sinon');
@@ -64,7 +64,7 @@ describe('Testa rota de produtos', () => {
                 db = connectionMock.db(DB_NAME);
 
                 productMock = {
-                    _id: '619e5367f60ad53e962a0a97',
+                    _id: ObjectId('619e5367f60ad53e962a0a97'),
                     name: 'Produto de teste',
                     quantity: 1,
                 };
