@@ -38,7 +38,6 @@ describe('Testa rota de produtos', () => {
             });
     
             it("Retorna um array", () => {
-                console.log(products)
                 expect(products).to.be.an('array');
     
             });

@@ -132,7 +132,6 @@ describe('Testa rota de produtos', () => {
 
             before(async () => {
                 productMock = {
-                    _id: ObjectId('619e5367f60ad53e962a0a98'),
                     name: 'Produto de teste 2',
                     quantity: 2,
                 };

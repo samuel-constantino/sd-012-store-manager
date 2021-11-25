@@ -1,17 +1,18 @@
 const express = require('express');
+const rescue = require('express-rescue');
 
 const { productController } = require('../controllers');
 
 const route = express.Router();
 
-route.get('/', productController.getAll);
+route.get('/', rescue(productController.getAll));
 
-route.get('/:id', productController.getById);
+route.get('/:id', rescue(productController.getById));
 
-route.post('/', productController.create);
+route.post('/', rescue(productController.create));
 
-route.put('/:id', productController.update);
+route.put('/:id', rescue(productController.update));
 
-route.delete('/:id', productController.remove);
+route.delete('/:id', rescue(productController.remove));
 
 module.exports = route;
