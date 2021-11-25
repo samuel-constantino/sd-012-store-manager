@@ -7,9 +7,9 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
-    const products = await productModel.getById(id);
+    const product = await productModel.getById(id);
 
-    return products;
+    return product;
 };
 
 const create = async (product) => {
@@ -31,9 +31,9 @@ const create = async (product) => {
 };
 
 const update = async (product) => {
-    const result = await productModel.update(product);
+    const productFound = await productModel.update(product);
 
-    return result;
+    return productFound;
 };
 
 const remove = async (productFound) => {
